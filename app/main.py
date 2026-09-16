@@ -59,8 +59,14 @@ app.include_router(youtube_router)
 
 
 # ==========================================
-# HEALTH CHECK ENDPOINTS
+# HEALTH CHECK & ROOT ENDPOINTS
 # ==========================================
+
+@app.get("/", tags=["Health"])
+def root():
+    """Root endpoint for Render default health checks and load balancers."""
+    return {"message": "AAWAZ Music API is live", "status": "ok", "health": "/health"}
+
 
 @app.get("/health", response_model=HealthResponse, tags=["Health"])
 def health_check():
