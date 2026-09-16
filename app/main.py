@@ -74,6 +74,21 @@ def health_check():
     return HealthResponse(status="ok")
 
 
+@app.get("/api/status", tags=["Health"])
+def status_endpoint():
+    """Status endpoint reporting live environment configuration without leaking secrets."""
+    from app.services.youtube_service import get_youtube_service
+    yt_svc = get_youtube_service()
+    has_yt = bool(yt_svc.api_key)
+    return {
+        "status": "ok",
+        "backend": "live",
+        "youtube_api_configured": has_yt,
+        "youtube_key_prefix": yt_svc.api_key[:4] + "..." if has_yt else None,
+        "cors_origins": settings.CORS_ORIGINS,
+    }
+
+
 @app.get("/api/health", response_model=HealthResponse, tags=["Health"])
 def api_health_check():
     """Detailed health check validating database connectivity."""

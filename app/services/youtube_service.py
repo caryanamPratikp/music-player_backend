@@ -17,7 +17,19 @@ class YouTubeService:
     """
 
     def __init__(self, api_key: Optional[str] = None):
-        self.api_key = api_key or settings.YOUTUBE_API_KEY
+        self._explicit_key = api_key
+
+    @property
+    def api_key(self) -> str:
+        if self._explicit_key:
+            return self._explicit_key
+        # Check os.environ dynamically with case/whitespace tolerance
+        for k, v in os.environ.items():
+            if k.strip().upper() == "YOUTUBE_API_KEY":
+                val = v.strip().strip("'\"")
+                if val:
+                    return val
+        return getattr(settings, "YOUTUBE_API_KEY", "").strip().strip("'\"")
 
     async def search_videos(
         self,
@@ -29,11 +41,12 @@ class YouTubeService:
         Search YouTube videos by query.
         Transforms raw YouTube responses into clean, lightweight dictionaries.
         """
-        if not self.api_key:
+        key = self.api_key
+        if not key:
             logger.error("YOUTUBE_API_KEY is not configured in backend environment.")
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-                detail="YouTube service is not configured. Please set YOUTUBE_API_KEY in .env.",
+                detail="YouTube service is not configured. Please set YOUTUBE_API_KEY in Render Environment.",
             )
 
         clean_query = query.strip()
