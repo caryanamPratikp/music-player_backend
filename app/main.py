@@ -28,15 +28,14 @@ async def lifespan(app: FastAPI):
     except Exception as exc:
         logger.error(f"Error during database initialization: {exc}")
     yield
-    logger.info("AAWAZ Backend shutting down...")
+    logger.info("MUSIFY Backend shutting down...")
 
 
 app = FastAPI(
-    title="AAWAZ — Music Player MVP API",
+    title="MUSIFY API",
     description=(
-        "Backend API for AAWAZ: Discover Indian Independent Music. "
-        "Provides song catalog metadata, range-supported audio streaming, "
-        "and modular storage abstraction for cloud readiness."
+        "Backend API for MUSIFY: Discover & Stream Indian and Regional Music. "
+        "Provides YouTube search discovery, song catalog metadata, and range-supported audio streaming."
     ),
     version="0.1.0",
     lifespan=lifespan,
@@ -66,7 +65,7 @@ app.include_router(youtube_router)
 @app.get("/", tags=["Health"])
 def root():
     """Root endpoint for Render default health checks and load balancers."""
-    return {"message": "AAWAZ Music API is live", "status": "ok", "health": "/health"}
+    return {"message": "MUSIFY API is live", "status": "ok", "health": "/health"}
 
 
 @app.get("/health", response_model=HealthResponse, tags=["Health"])
