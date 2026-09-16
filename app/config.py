@@ -44,7 +44,7 @@ class Settings:
         # CORS allowed origins
         cors_raw = os.getenv(
             "CORS_ORIGINS",
-            "http://localhost:5173,http://localhost:3000,https://music-player-frontend-3gwn.onrender.com"
+            "http://localhost:5173,http://localhost:3000,https://music-player-frontend-3gwn.onrender.com,https://musify.pages.dev,https://musify.app.dev"
         )
         self.CORS_ORIGINS: List[str] = [
             origin.strip() for origin in cors_raw.split(",") if origin.strip()
