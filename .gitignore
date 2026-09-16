@@ -1,0 +1,63 @@
+# Backend Environment Variables & Secrets
+.env
+.env.*
+*.env
+!.env.example
+
+# Python cache & artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+.venv/
+
+# Testing & Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Local storage (ephemeral music/covers)
+music/*.mp3
+music/*.wav
+music/*.ogg
+music/*.m4a
+music/*.flac
+covers/*.svg
+covers/*.jpg
+covers/*.jpeg
+covers/*.png
+covers/*.webp
+
+# IDEs & OS
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
